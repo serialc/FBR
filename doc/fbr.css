@@ -1,0 +1,153 @@
+/*--
+* Friendly Bath Routing with Google Maps
+*
+* Copyright 2012 Cyrille Médard de Chardon, Geoffrey Caruso
+* Licensed under the MIT license - see Licence.txt.
+*
+--*/
+
+/*-- Main HTML/Body formatting --*/
+
+html,body {
+	margin:0px 0px 0px 0px;
+	padding:0;}
+
+body {
+	background: #bbca79 url(imgs/bg_edges.gif) repeat-y 50% 0;
+	font: 86% arial,sans-serif;
+	text-align:center;}
+
+/*-- Main Page Layout formatting --*/
+div#header {
+	background-color: #A5C8DE;
+	height: 100px;}
+
+div#spacerblock {
+	background-color: white;}
+
+div#spacerblock div {
+	background-color: inherit;
+	float: left;
+	color: black;
+	padding: 3px 5px 3px 5px;
+	width: 105px;
+	font-weight: bold;
+	text-align: center;}
+	
+div#spacerblock div:hover {
+	text-decoration: underline;
+	cursor: pointer;}
+	
+div#header h1 {
+	background: url(imgs/bluefade.gif) repeat-x;
+	font: normal 25px Optima,Georgia,Arial Narrow,Arial,sans-serif;
+	line-height:30px;
+	margin: 0px;
+	padding: 20px 0px 0px 10px;
+	color: black}
+
+div#container {
+	text-align:left;
+	background-color: white;}
+	
+div#content p {
+	line-height:1.2;}
+
+div#container {
+	width:700px;
+	margin:0 auto}
+
+div#wrapper {
+	float:left;
+	width:100%}
+
+div#content {
+	margin: 0px 0px}
+
+div#footer {
+	clear: left;
+	height: 1px;}
+
+/*-- Headers and paragraphs--*/
+h2 {
+	background: url(imgs/h2grey.gif) repeat-x;
+	font: normal 20px Optima,Georgia,Arial Narrow,Arial,sans-serif;
+	line-height: 23px;
+	background-color: #686a5f;
+	color: white;
+	padding: 5px 15px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	border-top: 1px solid white;}
+
+h3 {
+	margin-left: 15px;
+	margin-bottom: 0px;}
+
+h4 {
+	margin: 5px 0 0 15px;
+	padding: 0 0 0 0;}
+p {
+	margin:10px 10px 5px 15px;
+	padding: 5px;}
+
+table {
+	margin: 0 0 10px 10px;}
+	
+/*-- url - links --*/
+a {
+	color: #c12331}
+
+/*-- Form elements --*/
+
+#p2 input {
+	width: 200px;
+	margin-right: 100px;}
+	
+/*-- Utility / Misc. Classes --*/
+
+.clickable {
+	cursor: pointer;}
+
+.mini {
+	float: right;
+	margin: 0 10px 0 10px;
+	text-transform: ;
+	font-size: 70%;}
+
+pre {
+	font-size: 120%;
+	margin:5px 10px 15px 15px;
+	padding: 3px;
+	overflow: auto;
+	white-space: pre-wrap;
+	background-color: #eef;}
+
+ol > li {
+	padding: 0 5px 0 0;}
+	
+.clearing {
+	clear: both;}
+
+.rfloat {
+	float: right;}
+	
+.lfloat {
+	float: left;}
+
+.fail {
+	background-color: #c12331;}
+	
+.oneline {
+	display: inline;}
+
+.lalign {
+	text-align: left;}
+	
+.ralign {
+	text-align: right;}
+	
+.centerit {
+	text-align: center;}
+	
+/* EOF */

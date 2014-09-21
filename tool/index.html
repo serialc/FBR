@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<!-- Copyright (C) 2014 Cyrille Medard de Chardon, Geoffrey Caruso -->
+<html>
+<head>
+	<title>Friendly Batch Routing</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<link rel="icon" type="image/png" href="imgs/fbricon.png">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<link rel="stylesheet" href="css/fbr.css">
+	<script src="http://maps.google.com/maps/api/js?sensor=false&region=LU"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+</head>
+<body onload="CmGm.initialize();">
+	<div id="container">
+
+		<div class='subcont'>
+			<h1>Friendly Batch Routing with Google Maps API</h1>
+		</div>
+
+		<div class='subcont'>
+			<div class='tb'>
+				<h3>Mode<span id='mode_toggle' class='button_like' title='Display mode details'>Super friendly</span></h3>
+				<div id='fbr_mode_sel_text'>
+					<p>It's now even easier and friendlier to use FBR. Select a mode.</p>
+					<div id='fbr_mode_sel'>
+						<input type="radio" name='fbr_mode' value='true' id='fbrm_sf' checked> <label class='fwb msel fbr_selectable' for='fbrm_sf'>
+							<h3>Super friendly</h3>
+							<ul>
+								<li>No server required</li>
+								<li>Great for small number of requests</li>
+								<li>Displays results in the browser</li>
+							</ul>
+							<p><small><em>Results are not automatically saved, you will need to copy the results into another program. This mode is not suggested if you are doing more than a couple hundred requests.</em></small></p>
+						</label>
+						<input type="radio" name='fbr_mode' value='false' id='fbrm_fas'> <label class='fwb msel fbr_selectable' for='fbrm_fas'>
+							<h3>Friendly and strong</h3>
+							<ul>
+								<li>Allows path saving</li>
+								<li>Saves results in text files</li>
+								<li>Import ready (<a href='http://www.r-project.org/' target='_blank'>R</a>, <a href='http://www.qgis.org/en/site/' target='_blank'>QGIS:</a>, <a href='https://www.libreoffice.org/discover/calc/' target='_blank'>Calc</a>, etc...)</li>
+							</ul>
+							<p><small><em>Requires a proper server. Uses PHP to save results. See the <a href='help'>help</a> if your are having difficulties getting this working.</em></small></p>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id='topwarn' class='subcont nodisp warn'> </div>
+
+		<div class='subcont'>
+			<div class='tb'>
+				<h3>Options <span id='options_toggle' class='button_like' title='Display options'>Hide<span></h3>
+				<div id='optwin'>
+					<div class='fwb'>
+						<strong>Input</strong>
+						</br>
+						<input type="checkbox" id="origtype" checked> <label for='origtype'>Origin type is lat/long</label> <br>
+						<input type="checkbox" id="desttype" checked> <label for='desttype'>Destination type is lat/long</label> <br>
+						<input type="checkbox" id="getPath"> <label for='getPath'>Record path coordinates</label> <br>
+						<input type="checkbox" id="hwavoid"> <label for='hwavoid'>Avoid highways if possible</label> <br>
+						<p> </p>
+						Pause time between queries: <input type="number" id="waittime" value="400"> <em>(ms)</em>
+					</div>
+					<div class='fwb'>
+						Travel type:<br>
+						<div id='radio_buttons_group'>
+							<input type="radio" name='fbr_op_tt' value='DRIVING' id='fbr_op_tt_dr' checked> <label class='' for='fbr_op_tt_dr'>Driving</label>
+							<input type="radio" name='fbr_op_tt' value='BICYCLING' id='fbr_op_tt_bi'> <label class='' for='fbr_op_tt_bi'>Bicycling</label>
+							<input type="radio" name='fbr_op_tt' value='WALKING' id='fbr_op_tt_wa'> <label class='' for='fbr_op_tt_wa'>Walking</label>
+							<input type="radio" name='fbr_op_tt' value='TRANSIT' id='fbr_op_tt_tr'> <label class='' for='fbr_op_tt_tr'>Transit</label>
+						</div>
+						<em>Walking and transit information is limited</em><br>
+						<p> </p>
+						<strong>Output</strong>
+						</br>Separate output values with:</br>
+						<div id='radio_buttons_group'>
+							<input type="radio" name='fbr_op_sepval' value="	" id='fbr_op_sepval_t' checked> <label for='fbr_op_sepval_t'>Tab</label> 
+							<input type="radio" name='fbr_op_sepval' value=',' id='fbr_op_sepval_c'> <label for='fbr_op_sepval_c'>Comma</label>
+							<input type="radio" name='fbr_op_sepval' value=' ' id='fbr_op_sepval_s'> <label for='fbr_op_sepval_s'>Space</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class='subcont'>
+			<div class='tb'>
+				<h3>Origin-destination input</h3>
+				<div class='fwb'>
+					Enter journey list in format: <strong>id;origin;destination</strong> <br>
+					<textarea id="journeylist" cols='80' rows='5'>1;49.61,6.1296;49.65861,6.13249</textarea> <br>
+					<div id='rec_count'></div>
+					<input type='submit' onclick='CmGm.calcRoute();'> <input id='b_stop' class='nodisp' type='submit' value='stop' onclick='CmGm.stopCalc();'>
+				</div>
+				<div class='fwb'>
+					<div id="map_canvas"></div>
+				</div>
+			</div>
+			<div class='tb'>
+				<div id="prog_box" class='nodisp'>
+					<div id="prog_text">Process 0% complete</div>
+					<div id="prog_bar"> <div id="prog_bar_size">&nbsp;</div> </div>
+				</div>
+			</div>
+		</div>
+
+		<div id='warn' class='warn subcont nodisp'> </div>
+			
+		<div class='subcont'>
+			<div class='tb'>
+				<h3>Results</h3>
+
+				<div id='cmpper' class='nodisp'></div>
+
+				<div id='fbr_res_fas'>
+					<p>
+						Results are located on your server in the <a href='output/'>output folder</a> as date_time stamped files:<br>
+						<strong>date_time_maindata.txt</strong> and <strong>date_time_pathdata.txt</strong>
+					</p>
+				</div>
+
+				<div id='fbr_res_sf'>
+					<p>
+						Copy and paste the data below into your prefered text editor to save it.
+						<textarea id="sf_res_textarea" rows='5'></textarea>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div id='error_section' class='subcont nodisp'>
+			<div class='tb'>Skipped records due to unreachable location, error, incorrect input
+				<h3>Errors</h3>
+				<textarea id="jdist" rows='10'></textarea><br>
+				Error Explanations<br>
+				<textarea id="warn_error_msg" rows='5'></textarea>
+			</div>
+		</div>
+		<div class='subcont'>
+			<div class='tb'>
+				<p>
+					Copyright (C) 2014 Cyrille Medard de Chardon, Geoffrey Caruso
+				</p>
+				<p>
+					This program is free software; you can redistribute it and/or modify
+					it under the terms of the GNU General Public License as published by
+					the Free Software Foundation; either version 2 of the License, or
+					(at your option) any later version.
+				</p>
+				<p>
+					This program is distributed in the hope that it will be useful,
+					but WITHOUT ANY WARRANTY; without even the implied warranty of
+					MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+					GNU General Public License for more details.
+				</p>
+				<p>
+					You should have received a copy of the GNU General Public License along
+					with this program; if not, write to the Free Software Foundation, Inc.,
+					51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+				</p>
+				<p>
+					See <a href='../LICENSE'>LICENSE</a>
+				</p>
+			</div>
+		</div>
+		<!-- end of container -->
+	<script src="js/fbr.js"></script>
+	</body>
+</html>

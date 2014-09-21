@@ -1,0 +1,31 @@
+/* Copyright (C) 2014 Cyrille Medard de Chardon, Geoffrey Caruso */
+/* Layout */
+body { background-color: #eee; font-size: 1.2em; font-family: Helvetica, Arial; }
+#container { max-width: 950px; min-width:700px; margin: 0 auto; }
+.subcont { background-color: white; margin: 10px 0; padding: 5px 25px; box-shadow: 0px 0px 6px #bbb; border-left: 5px solid green;}
+.tb { padding: 10px; margin: 5px 0; line-height: 1.4em; overflow: auto; }
+.fwb { float: left; width: 40%; padding: 20px 5% 0;}
+.msel { padding: 20px 2.5%; margin: 20px 2.5% 0 2.5%; min-height: 280px; }
+
+/* Styling, look and interaction */
+#prog_bar { border: 1px solid lightblue; }
+#prog_bar > div { background-color: lightblue; width: 0%; }
+#map_canvas { width: 200px; height: 280px; float: right; border: 5px solid #ccc;}
+.warn { background-color: #fee; display: none;}
+#waittime { width: 4em; }
+#jdist, #warn_error_msg { width: 99%; }
+h3 { font-family: Helvetica, Arial; font-size: 1.4em; font-weight: normal; margin: 0; padding: 0;}
+h3 span { float: right; }
+textarea { height: 238px; width: 100%; }
+.fbr_selectable { background-color: rgba(200, 200, 200, 0.4); cursor: pointer; border-radius: 5px;}
+.fbr_selectable:hover { background-color: rgba(180, 235, 180, 0.8);}
+div#fbr_mode_sel input {display: none; }
+div#fbr_mode_sel input[type='radio']:checked + label { background: rgba(140, 230, 140, 0.9) url('../imgs/selected.png') no-repeat top right; }
+span.button_like{ margin-left: 20px; background-color: rgba(180, 235, 180, 0.8); padding: 5px; border-radius: 5px; cursor: pointer;}
+span.button_like:hover { background-color: rgba(140, 230, 140, 0.8);}
+div#radio_buttons_group input { display: none; }
+div#radio_buttons_group label { padding: 5px; background-color: rgba(200, 200, 200, 0.4); border-radius: 5px; cursor: pointer;}
+div#radio_buttons_group input:hover { background-color: rgba(180, 235, 180, 0.8); }
+div#radio_buttons_group input[type='radio']:checked + label { background-color: rgba(140, 230, 140, 0.8);}
+div#radio_buttons_group label:hover { background-color: rgba(180, 235, 180, 0.8);}
+.nodisp { display: none; }
