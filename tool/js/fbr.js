@@ -183,16 +183,14 @@ CmGm.countRecords = function () {
 		bad_recs + " error(s).</small>");
 
 	// if we are in super friendly mode give warning about too many requests
-	if (recs > 200) {
-		errors_or_warnings = "<p>Warning: Too many requests in FBR Super friendly mode can slow down your browser. Your results will not be saved automatically. You will need to copy and paste the results from the textarea below or the results will be lost. We suggest using FBR Friendly and strong mode for more than 200 requests.<p>";
+	if (recs > 50 && CmGm.mode === 'friendly') {
+		errors_or_warnings = "<p>Warning: Too many requests in FBR Super friendly mode can slow down your browser. Your results will not be saved automatically. You will need to copy and paste the results from the textarea below or the results will be lost. We suggest using FBR Friendly and strong mode for more than 50 requests.<p>";
+		errors_or_warnings += "<p>Warning: The Google Maps API will not complete more than 50-100 sequential requests unless you use an API key.</p>";
 	}
 	
 	// Prepare and print error/warning messages regarding count or format of input
-	if (recs > 2500) {
-		errors_or_warnings += "<p>Warning: The Google Maps API has a query <a href='http://code.google.com/intl/fr/apis/maps/documentation/directions/#Limits'>limit</a> of 2,500 direction requests per day.</p>";
-	}
-	if (recs > 250) {
-		errors_or_warnings += "<p>Warning: The Google Maps API will not complete more than 250-300 sequential requests unless you use an API key.</p>";
+	if (recs > 2500 && CmGm.mode === 'strong') {
+		errors_or_warnings += "<p>Warning: The Google Maps API has a query <a href='http://code.google.com/intl/fr/apis/maps/documentation/directions/#Limits'>limit</a> of 2,500 direction requests per day. <strong>If you have enabled billing THIS MAY COST YOU MONEY.</strong></p>";
 	}
 	
 	if (errors_or_warnings) {
@@ -386,7 +384,7 @@ CmGm.calcRoute = function () {
 					// Update the progress bar
 					process_progress = (ttl_journies - num_journies) * 100 / ttl_journies;
 					$("#prog_bar_size").css("width", process_progress + "%");
-					$("#prog_text").html("Process " + process_progress.toFixed(1) + "% complete")
+					$("#prog_text").html("Process " + process_progress.toFixed(1) + "% complete (" + (ttl_journies - num_journies) + "/" + ttl_journies + ")")
 					
 					// Call the function that sends the request to Google
 					sendRequest(request,journey[0],i);
