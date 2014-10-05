@@ -23,6 +23,7 @@
    <div id="spacerblock">
     <div onclick='seePage(1)'>Introduction</div>
 	<div onclick='seePage(2)'>Screenshots</div>
+	<div onclick='seePage(3)'>Google API key</div>
 	<div onclick='seePage(4)'>Documentation</div>
 	<div onclick='seePage(6)'>Help</div>
 	<div onclick='seePage(5)'>Contact</div>
@@ -68,6 +69,22 @@ etc... 56 lines</pre>
 	   <p>A separate example shows errors output. The original input as well as the error cause is output. This allows for easy reinsertion if queue limit is exceeded, or general record keeping.</p><p><img src='imgs/fbr3.png'></p>
 	  </div>
 	  
+	  <!-- SETUP -->
+  	  <h2 id='hp3' onclick="seePage(3)">Google API key</h2>
+	  <div class='psec hoverp' id='p3'>
+		  <p>In 2013/2014 Google began limiting the number of sequential requests without using a personal key. You must follow these directions to add your key to FBR in order to do more than 50 or so requests.</p>
+		  <p><a href='https://developers.google.com/maps/documentation/javascript/tutorial#api_key'>Activate your API key.</a></p>
+		  <ol>
+			  <li>Create a project.
+			  <li>Activate Google Directions API.
+			  <li>Create a new key, select the <strong>server key</strong>.
+			  <li>Copy the API KEY provided to the <strong>config.php</strong> file.
+			  <li>This is a good time to customize the default search region of your requests in <strong>config.php</strong>. You can find a list of the acceptable region codes <a href='http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry'>here</a>.
+			  <li>If you are using Super friendly you should update the region in the main index.html file - see the line <pre>&lt;script src="http://maps.google.com/maps/api/js?sensor=false&amp;region=LU"&gt;&lt;/script&gt;</pre>.
+			  <li>You <em>must</em> enable billing - register a credit card - for this service to work!
+		  </ol>
+	  </div>
+
 	  <!-- DOCUMENTATION -->
 	  <h2 id='hp4' onclick="seePage(4)">Documentation</h2>
 	  <div class='psec hoverp' id='p4'>
@@ -256,10 +273,8 @@ THE SOFTWARE.</p>
 		
 	}
 	
+	// show introduction by default
 	seePage(1);
-	
-	document.getElementById('refin').setAttribute('value',document.referrer);
-	
   </script>
  </body>
  

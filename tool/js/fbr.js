@@ -236,6 +236,7 @@ CmGm.calcRoute = function () {
 		ttl_journies, num_journies, process_progress,
 		request_state = 0, request, request_result, request_line,
 		i, dump, an_error, error_count, print_results,
+		theleg,
 		fbr_opts = { 
 			// get the 'friendly' or 'strong' mode name
 			mode: CmGm.mode,
@@ -257,7 +258,7 @@ CmGm.calcRoute = function () {
 			// Get the selected output separator
 			sepval: $("input:radio[name='sepval']:checked").val()},
 		// functions declared to be defined later
-		getDirection, sendRequest;
+		getDirection, sendRequest, parseDirectionResults;
 		
 	// need to keep global track of errors
 	error_count = 0
@@ -293,7 +294,7 @@ CmGm.calcRoute = function () {
 
 	// function variable name declared earlier
 	getDirection = function() {
-		
+
 		// if finished processing a route but the user terminated the job...
 		if(request_state === 0 && CmGm.query_status === false) {
 			// num_journies contains the number of records left to process
@@ -404,7 +405,7 @@ CmGm.calcRoute = function () {
 
 			case 1:
 				// Still waiting for results
-				setTimeout(getDirection, wait_time);
+				setTimeout(getDirection, fbr_opts.wait_time);
 				break;
 
 			case 2:
@@ -431,12 +432,14 @@ CmGm.calcRoute = function () {
 				// At end of processing show options and modes maximize buttons
 				CmGm.lockdown(false);
 
-				// Ajax command to delete file key
-				$.ajax({
-					type: 'POST',
-					url: 'writeGMdata.php',
-					data: {type: 'finished', file: fbr_opts.file_code}
-				})
+				if( fbr_opts.mode === 'strong' ) {
+					// Ajax command to delete file key
+					$.ajax({
+						type: 'POST',
+						url: 'writeGMdata.php',
+						data: {type: 'finished', file: fbr_opts.file_code}
+					});
+				}
 
 				// Hide the stop button again
 				$("#b_stop").hide();
@@ -450,11 +453,15 @@ CmGm.calcRoute = function () {
 	sendRequest = function (request, LLid, query_num) {
 		print_results = '';
 		
-		// Ajax request to Google Maps API
-		CmGm.directionsService.route(request, function(result, status) {
+		parseDirectionResults = function(result, status) {
 			if (status == google.maps.DirectionsStatus.OK) {
-				CmGm.directionsDisplay.setDirections(result);
 				
+				// we do not display friendly and strong results
+				if (fbr_opts.mode == 'friendly') {
+					CmGm.directionsDisplay.setDirections(result);
+				}
+				
+				// for simplicity copy
 				theleg = result.routes[0].legs[0];
 				
 				//display any warnings related to the route
@@ -469,19 +476,31 @@ CmGm.calcRoute = function () {
 				}
 		
 				//combine and format all the data into one string
-				print_results =
-					LLid + fbr_opts.spacer +
-					theleg.start_location.lat() + fbr_opts.spacer +
-					theleg.start_location.lng() + fbr_opts.spacer +
-					theleg.end_location.lat() + fbr_opts.spacer +
-					theleg.end_location.lng() + fbr_opts.spacer +
-					theleg.duration.value + fbr_opts.spacer +
-					theleg.distance.value + fbr_opts.spacer +
-					theleg.steps.length;	//the number of instruction steps / complexity?.
+				if ( typeof(theleg.start_location.lat) === 'function' ) {
+					print_results =
+						LLid + fbr_opts.spacer +
+						theleg.start_location.lat() + fbr_opts.spacer +
+						theleg.start_location.lng() + fbr_opts.spacer +
+						theleg.end_location.lat() + fbr_opts.spacer +
+						theleg.end_location.lng() + fbr_opts.spacer +
+						theleg.duration.value + fbr_opts.spacer +
+						theleg.distance.value + fbr_opts.spacer +
+						theleg.steps.length;	//the number of instruction steps / complexity?.
+				} else {
+					print_results =
+						LLid + fbr_opts.spacer +
+						theleg.start_location.lat + fbr_opts.spacer +
+						theleg.start_location.lng + fbr_opts.spacer +
+						theleg.end_location.lat + fbr_opts.spacer +
+						theleg.end_location.lng + fbr_opts.spacer +
+						theleg.duration.value + fbr_opts.spacer +
+						theleg.distance.value + fbr_opts.spacer +
+						theleg.steps.length;	//the number of instruction steps / complexity?.
+				}
 
 				// See if we are in Super friendly or Friendly and strong mode
 				if( fbr_opts.mode == 'friendly' ) {
-					// append results to text area, simple
+					// Append results to text area, simple
 					$('#sf_res_textarea').val($('#sf_res_textarea').val() + print_results + '\n');
 				}
 				if( fbr_opts.mode == 'strong' ) {
@@ -491,7 +510,7 @@ CmGm.calcRoute = function () {
 						url: 'writeGMdata.php',
 						data: {results: print_results, file: fbr_opts.file_code, type: 'main'}
 					})
-					.done(function( message ) { 
+					.done(function( message ) {
 						if( message.length != 0 ) {
 							$('#warn_error_msg').val(LLid + fbr_opts.spacer + 'Failed search query number: ' +
 								query_num + ' - An error occurred while trying to submit data to server! Message: ' +
@@ -517,26 +536,28 @@ CmGm.calcRoute = function () {
 						// increment error_count
 						error_count += 1
 					});// End of fail/error function
-				
+		
 					// Try to send lat/long path data to server (AJAX)
 					if(fbr_opts.getpaths) {
-
 						// Clean up print_results to put in path info
 						print_results = '';
-						
+
+						// convert the path to points (for simplicity we simply add to the result object)
+						result.routes[0].overview_path = google.maps.geometry.encoding.decodePath(result.routes[0].overview_polyline.points)
+
 						// Print the lat/long of each step in the following format
 						for( i = 0; i < result.routes[0].overview_path.length; i++ ) {
 							var latlng = result.routes[0].overview_path[i];
 							print_results += LLid + fbr_opts.spacer + (i+1) + fbr_opts.spacer + latlng.lat() + fbr_opts.spacer + latlng.lng() + '\n';
 						}
-			
+						
 						// Send the line path data to server using jquery AJAX
 						$.ajax({
 							type: 'POST',
 							url: 'writeGMdata.php',
 							data: {results: print_results, file: fbr_opts.file_code, type: 'path'}
 						})
-						.done(function( message ) { 
+						.done(function( message ) {
 							if( message.length != 0 ) {
 								$('#warn_error_msg').val(LLid + fbr_opts.spacer + 'Failed search query number: ' +
 									query_num + ' - An error occurred while trying to submit data to server! Message: ' +
@@ -544,6 +565,7 @@ CmGm.calcRoute = function () {
 								$('#error_section').show('fast');
 								$("#warn").html('Error encountered see details in Errors section below.');
 								$("#warn").show('fast');
+		
 								// Retrieved data from Google Maps API successfully, but failed to save results!
 								request_state = 2; // Abort/quit/stop
 								// increment error_count
@@ -551,7 +573,7 @@ CmGm.calcRoute = function () {
 							}
 						})
 						.fail(function(request, status, error) {
-							$('#warn_error_msg').val( $('#warn_error_msg').val() + 
+							$('#warn_error_msg').val( $('#warn_error_msg').val() +
 								LLid + fbr_opts.spacer + 'Failed search query number: ' +
 								query_num + ' - An error occurred while trying to submit path data to server! Message: ' +
 								error + '\n' );
@@ -563,12 +585,12 @@ CmGm.calcRoute = function () {
 							error_count += 1
 						});//end of fail/error function
 					}
-			}
+				}
 
 				// Retrieved data from Google Maps API successfully, get ready to do next record
 				request_state = 0;
 
-			} else {	
+			} else {
 				//encountered error - begin error handling
 				
 				// count errors
@@ -603,10 +625,44 @@ CmGm.calcRoute = function () {
 				// Failed to retrieved data from Google Maps API for some reason, error is displayed - do next record
 				request_state = 0;
 			}
-		});
+		};
+
+		// Ajax request to PHP to use Directions API
+		if ( fbr_opts.mode == 'strong' ) {
+
+			request.otypell = fbr_opts.origtypelatlong;
+			request.dtypell = fbr_opts.desttypelatlong;
+
+			$.ajax({
+				type: 'POST',
+				url: 'getDirections.php',
+				data: {json: JSON.stringify(request)},
+				dataType: 'json'
+			})
+			.done( function( data ) {
+				data = JSON.parse(data);
+				parseDirectionResults(data, data['status']);
+			})
+			.fail( function( data ) {
+				$('#warn_error_msg').val(LLid + fbr_opts.spacer + 'Failed search query number: ' +
+					query_num + ' - An error occurred while trying to submit request to Google Directions API using getDirections.php Message: ' + data + '\n');
+				$('#error_section').show('fast');
+				$("#warn").html('Error encountered see details in Errors section below.');
+				$("#warn").show('fast');
+				// Unable to send request to getDirections.php correctly
+				request_state = 2; // Abort/quit/stop
+				// increment error_count
+				error_count += 1
+			});
+		}
+
+		// Ajax request to directionsService directly
+		if ( fbr_opts.mode == 'friendly' ) {
+			CmGm.directionsService.route(request, parseDirectionResults);
+		}
 	};
 
-	//start the setTimeout loop
+	// start the setTimeout loop
 	getDirection();
 
 };//end of function calcRoute();

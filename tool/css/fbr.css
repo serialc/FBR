@@ -29,3 +29,14 @@ div#radio_buttons_group input:hover { background-color: rgba(180, 235, 180, 0.8)
 div#radio_buttons_group input[type='radio']:checked + label { background-color: rgba(140, 230, 140, 0.8);}
 div#radio_buttons_group label:hover { background-color: rgba(180, 235, 180, 0.8);}
 .nodisp { display: none; }
+
+/* classes */
+.good, bad {
+	display: block;
+	background-color: lightgreen;
+	padding: 5px;
+}
+
+.bad {
+	background-color: orange;
+}
