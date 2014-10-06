@@ -14,8 +14,8 @@
 	<div id="container">
 
 		<div class='subcont'>
-			<h1>Friendly Batch Routing with Google Maps API</h1>
-			<p><a href='../doc/index.html' target='_blank'>Documentation</a></p>
+			<h1>Friendly Batch Routing <small>with Google Maps API</small></h1>
+			<a href='../doc/index.html' target='_blank'>Documentation</a>
 		</div>
 
 		<div class='subcont'>
@@ -40,7 +40,7 @@
 								<li>Saves results in text files</li>
 								<li>Import ready (<a href='http://www.r-project.org/' target='_blank'>R</a>, <a href='http://www.qgis.org/en/site/' target='_blank'>QGIS:</a>, <a href='https://www.libreoffice.org/discover/calc/' target='_blank'>Calc</a>, etc...)</li>
 							</ul>
-							<p><small><em>Requires a proper server. Uses PHP to save results. See the <a href='help'>help</a> if your are having difficulties getting this working.</em></small></p>
+							<p><small><em>Requires a proper server. Uses PHP to save results. See the <a href='help'>help</a> if your are having difficulties getting this working. You need to activate Google Directions API.</em></small></p>
 						</label>
 					</div>
 				</div>
@@ -61,7 +61,7 @@
 						<input type="checkbox" id="getPath"> <label for='getPath'>Record path coordinates</label> <br>
 						<input type="checkbox" id="hwavoid"> <label for='hwavoid'>Avoid highways if possible</label> <br>
 						<p> </p>
-						Pause time between queries: <input type="number" id="waittime" value="400"> <em>(ms)</em>
+						Pause time between queries: <input type="number" id="waittime" value="400"> <em>(ms)</em><br>
 					</div>
 					<div class='fwb'>
 						Travel type:<br>
@@ -83,6 +83,7 @@
 					</div>
 				</div>
 			</div>
+			<p><strong>Check that your <a href='https://console.developers.google.com/project' target='_blank'>Directions API requests</a> do not go over the quota or else you will incur costs.<strong></p>
 		</div>
 
 
@@ -117,7 +118,7 @@
 
 				<div id='fbr_res_fas'>
 					<p>
-						Results are located on your server in the <a href='output/'>output folder</a> as date_time stamped files:<br>
+						Results are located on your server in the <a href='output/' target='_blank'>output folder</a> as date_time stamped files:<br>
 						<strong>date_time_maindata.txt</strong> and <strong>date_time_pathdata.txt</strong>
 					</p>
 				</div>
