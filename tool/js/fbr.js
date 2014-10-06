@@ -387,7 +387,8 @@ CmGm.calcRoute = function () {
 					$("#prog_text").html("Process " + process_progress.toFixed(1) + "% complete (" + (ttl_journies - num_journies) + "/" + ttl_journies + ")")
 					
 					// Call the function that sends the request to Google
-					sendRequest(request,journey[0],i);
+					console.log('query_num' + i);
+					sendRequest(request, journey[0], i);
 					
 					// Call this function (in which we are in now) again in a set amount of time
 					setTimeout(getDirection, fbr_opts.wait_time);
@@ -642,6 +643,7 @@ CmGm.calcRoute = function () {
 				parseDirectionResults(data, data['status']);
 			})
 			.fail( function( data ) {
+				console.log(data);
 				$('#warn_error_msg').val(LLid + fbr_opts.spacer + 'Failed search query number: ' +
 					query_num + ' - An error occurred while trying to submit request to Google Directions API using getDirections.php Message: ' + data + '\n');
 				$('#error_section').show('fast');

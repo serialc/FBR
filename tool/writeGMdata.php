@@ -12,14 +12,14 @@ $data_type = $_POST['type'];
 
 // Sanitization
 // File code must contain only [0-9], preg_replace omits all other characters
-$file_code_clean= preg_replace('/[^0-9a-z]/', '', $file_code);
+$file_code_clean = preg_replace('/[^0-9a-z]/', '', $file_code);
 
 //content must contain only \t, commas (,), space ( ), digits, periods/decimal (.).
 $clean_data = preg_replace('/[^0-9\t\-\. \n,]/', '', $data);
 
-if ($clean_filename != $filename || $clean_data != $data) {
+if ($clean_data != $data) {
 	//do not create or append to any file, any data
-	echo("The input data cannot be written to the server. If you believe this to be a bug please contact the developer.");
+	echo("The input data cannot be written to the server. It is not valid. If you believe this to be a bug please contact the developer.");
 	return;
 }
 

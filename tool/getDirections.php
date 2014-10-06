@@ -9,11 +9,14 @@ date_default_timezone_set('UTC');
 # Geth the key, and default regions
 include('config.php');
 
+$req = '';
+
 if(isset($_POST['json'])) {
 	# get the json from FBR javascript ajax call
 	$req = json_decode($_POST['json']);
 } else {
 	print("Error");
+	return;
 }
 
 # Build url from parameters
@@ -51,6 +54,10 @@ $ch = curl_init();
 # set options
 curl_setopt($ch, CURLOPT_URL, str_replace(' ', '', $url)); # convert spaces in url
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); # return result, don't print
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); # don't certify, gets too complicated
+
+# print any curl errors if they occured
+print(curl_error($ch));
 
 $json_dir = curl_exec($ch);
 curl_close($ch);
