@@ -9,8 +9,12 @@ date_default_timezone_set('UTC');
 # Geth the key, and default regions
 include('config.php');
 
-# get the json from FBR javascript ajax call
-$req = json_decode($_POST['json']);
+if(isset($_POST['json'])) {
+	# get the json from FBR javascript ajax call
+	$req = json_decode($_POST['json']);
+} else {
+	print("Error");
+}
 
 # Build url from parameters
 $url = 'https://maps.googleapis.com/maps/api/directions/json?' .
