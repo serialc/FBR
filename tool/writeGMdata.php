@@ -6,6 +6,10 @@
 
 date_default_timezone_set('UTC');
 
+$data = '';
+$file_code = '';
+$data_type = '';
+
 $data = $_POST['results'];
 $file_code= $_POST['file'];
 $data_type = $_POST['type'];
