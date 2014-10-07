@@ -28,6 +28,16 @@ if ($clean_data != $data) {
 }
 
 // ----- Filename retrieval start -------------
+# check if kefile and output folder are writable
+if( !is_writable('key_file.txt') ) {
+	print("FBR requires writing permission on 'key_file.txt' for Friendly and strong mode.");
+	return;
+}
+if( !is_writable('output') ) {
+	print("FBR requires writing permission on 'output' folder/directory for Friendly and strong mode.");
+	return;
+}
+
 // Lookup file code correspondance date_time filename
 $keyfile = file_get_contents('key_file.txt');
 $keylines = explode("\n", $keyfile);

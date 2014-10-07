@@ -1,4 +1,7 @@
 /* Copyright (C) 2014 Cyrille Medard de Chardon, Geoffrey Caruso */
+
+/* A bit of a mess */
+
 /* Layout */
 body { background-color: #eee; font-size: 1.2em; font-family: Helvetica, Arial; }
 #container { max-width: 950px; min-width:700px; margin: 0 auto; }
@@ -41,4 +44,8 @@ div#radio_buttons_group label:hover { background-color: rgba(180, 235, 180, 0.8)
 
 .bad {
 	background-color: orange;
+}
+
+.fr {
+	float: right;
 }

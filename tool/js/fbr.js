@@ -73,6 +73,7 @@ CmGm.setFBRMode = function (mode) {
 	// hide the results sections
 	$('#fbr_res_sf').hide('fast');
 	$('#fbr_res_fas').hide('fast');
+	$('.strong_mode').hide('fast');
 
 	// server free mode but limited functionality
 	if( mode === 'friendly' ) {
@@ -88,6 +89,9 @@ CmGm.setFBRMode = function (mode) {
 
 		// force check box selection in case the was done other than actually clicking on 'button'
 		$('#fbrm_sf').prop('checked', true);
+
+		// display map
+		$('.friendly_mode').show('fast');
 	}
 	// heavy lifting, server needed full functionality
 	if( mode === 'strong' ) {
@@ -99,6 +103,10 @@ CmGm.setFBRMode = function (mode) {
 
 		// display the correct results section
 		$('#fbr_res_fas').show('fast');
+
+		// display the warning regarding quota
+		$('.friendly_mode').hide('fast');
+		$('.strong_mode').show('fast');
 		
 		// check if the FBR is being used on a proper server
 		if (window.location.protocol === 'file:') {
