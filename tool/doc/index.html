@@ -6,9 +6,8 @@
   </title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link rel="icon" href="favicon.ico" type="image/ico">
-  <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
   <link rel="SHORTCUT ICON" href="favicon.ico">
-  <link rel='stylesheet' type='text/css' href='fbr.css'>
+  <link rel='stylesheet' type='text/css' href='docfbr.css'>
  </head>
 
  <body>
@@ -21,57 +20,82 @@
 	<span class='mini'>By Cyrille M&eacute;dard de Chardon</span>
    </div>
    <div id="spacerblock">
-    <div onclick='seePage(1)'>Introduction</div>
-	<div onclick='seePage(2)'>Screenshots</div>
-	<div onclick='seePage(3)'>Google API key</div>
-	<div onclick='seePage(4)'>Documentation</div>
-	<div onclick='seePage(6)'>Help</div>
-	<div onclick='seePage(5)'>Contact</div>
+    <div><a href='#intro'>Introduction</a></div>
+	<div><a href='#help'>Server help</a></div>
+	<div><a href='#api'>Google API key</a></div>
+	<div><a href='#doc'>Documentation</a></div>
+	<div><a href='#cont'>Contact</a></div>
    </div>
     <div id="wrapper">
      <div id="content">
 	  <!-- INTRODUCTION -->
-      <h2 id='hp1' onclick="seePage(1)">Introduction</h2>
-	  <div class='psec hoverp' id='p1'>
+      <h2 id='intro'>Introduction</h2>
+	  <div class='psec hoverp'>
        <p>The Friendly Batch Routing (FBR) application uses the Google Maps API to easily and simply gather route data for many origin-destination pairs. FBR is designed with usability in mind so that errors do not interrupt processing and skipped records can easily be resubmitted for processing. Additionally the FBR output can easily be imported into GIS packages.</p>
-       <p>A simple origin-destination address or lat/long pair input will return:</p>
-       <ul> 
-		<li>the lat/long of the origin,</li>
-        <li>the lat/long of the destination,</li>
-        <li>travel time in seconds,</li>
-        <li>travel distance in metres, and</li>
-        <li>Google Maps direction steps (a complexity proxy)</li>
-	   </ul>
-	   <p>and optionally in an other file:</p>
+	   <p>There are two modes in the newest version of FBR.</p>
 	   <ul>
-		<li>the geometric path as a function of lat/long points.</li>
+		   <li>The <strong>Super friendly</strong> mode allows you to submit a small number of queries from any computer and retrieve the distance, time and number of instructions steprs to reach the destination.
+		   <li>The <strong>Friendly and strong</strong> mode requires a server running PHP as well as a Google API key. The benefits are much faster requests, many more requests possible, path saving and trip duration, distance saved to a text file.
 	   </ul>
-       <h3>Example</h3>
-       <h4>Input:</h4>
-       <pre>1;Luxembourg, Luxembourg;Walferdange, Luxembourg</pre>
-       <h4>Output (timestamped):</h4>
-       <p>2010-9-6-11-42-23_maindata.txt contents:</p>
-       <pre>1	49.61	6.1296	49.65861	6.13249	673	6264	8</pre>
-       <p>2010-9-6-11-42-23_pathdata.txt contents:</p>
-       <pre>1	1	49.61000000000001	6.129600000000001
+	   <h3>Inputs</h3>
+	   <p>A simple origin-destination address or lat/long pair</p>
+		<ul>
+			<li>1;London, UK;Cambridge, UK
+			<li>2;43.5,7;Berlin, Germany
+			<li>3;Paris, France;52.5,13.5
+			<li>4;49,7;52.5,13.5
+		</ul>
+
+		<h3>Outputs</h3>
+		<p>Super friendly and Friendly and strong modes:</p>
+        <ul> 
+			<li>the lat/long of the origin,</li>
+			<li>the lat/long of the destination,</li>
+			<li>travel time in seconds,</li>
+			<li>travel distance in metres, and</li>
+			<li>Google Maps direction steps (a complexity proxy)</li>
+		</ul>
+		<p>Optionally in Friendly and strong mode:</p>
+		<ul>
+			<li>the geometric path as a function of lat/long points.</li>
+		</ul>
+
+		<h3>Example</h3>
+		<h4>Input:</h4>
+		<pre>1;Luxembourg, Luxembourg;Walferdange, Luxembourg</pre>
+		<h4>Output (timestamped):</h4>
+		<p>2010-9-6-11-42-23_maindata.txt contents:</p>
+		<pre>1	49.61	6.1296	49.65861	6.13249	673	6264	8</pre>
+		<p>2010-9-6-11-42-23_pathdata.txt contents:</p>
+		<pre>1	1	49.61000000000001	6.129600000000001
 1	2	49.61009000000001	6.132210000000001
 1	3	49.610800000000005	6.13168
 etc... 56 lines</pre>
-       <p><em>Please be aware that the Google Maps API has a query <a href='http://code.google.com/intl/fr/apis/maps/documentation/directions/#Limits'>limit</a> of 2,500 direction requests per day.</em></p>
-	   <p>See the Screenshots, documentation or download the application yourself to install on your server.</p>
-	  </div>
-	  
-	  <!-- SCREENSHOTS -->
-  	  <h2 id='hp2' onclick="seePage(2)">Screenshots</h2>
-	  <div class='psec hoverp' id='p2'>
-	   <p>Input:</p><p><img src='imgs/fbr1.png'></p>
-	   <p>Displayed Output:</p><p><img src='imgs/fbr2.png'></p>
-	   <p>A separate example shows errors output. The original input as well as the error cause is output. This allows for easy reinsertion if queue limit is exceeded, or general record keeping.</p><p><img src='imgs/fbr3.png'></p>
+		<p><em>Please be aware that the Google Maps API has a query <a href='http://code.google.com/intl/fr/apis/maps/documentation/directions/#Limits'>limit</a> of 2,500 direction requests per day. If you are using Friendly and strong mode you may get charged for exceeding your free quota!</em></p>
+       </div>
+
+	  <!-- Server help-->
+  	  <h2 id='help'>Server help</h2>
+	  <div class='psec hoverp'>
+		   <p>Please be aware that you need a server that runs PHP to be able to use FBR. Most computers can act as a server. Please make sure you have PHP functioning before testing FBR.</p>
+		  <p>Here are a couple of questions that may help diagnose your server problems if you are trying to use <strong>Friendly and strong</strong> mode.</p>
+		<ol>
+			<li>Is PHP running on your server? Are you running FBR on a server? Have you <a href='test.php'>tested a simple PHP script</a>?</li> <li>If you believe PHP works then try checking <strong>permissions</strong> of the 'output' folder, it should be writeable for all (chmod 777 output).</li>
+			<li>You will also need to set the file <strong>key_file.txt</strong> as writeable (chmod 777 key_file.txt).</li>
+			<li>Check if FBR is throwing JavaScript errors. Most browsers (Firefox/IE9+/Chrome) have an Error console of some sort.</li>
+			<li>If you downloaded FBR a long time ago then try downloading it again. Google made some changes that required me to update FBR.</li>
+		</ol>
+
+		<h3>PHP Test</h3>
+		<p>Open <a href='test.php'>test.php</a> from your browser using the correct <strong>server URL</strong>. The test page should resemble <a href='imgs/result_of_test.png'>result_of_test.png</a>.</p>
+		<p>If test.php displays a few lines of code then PHP is not functioning and you will need to install/configure PHP on your server.</p>
+		</body>
+
 	  </div>
 	  
 	  <!-- SETUP -->
-  	  <h2 id='hp3' onclick="seePage(3)">Google API key</h2>
-	  <div class='psec hoverp' id='p3'>
+  	  <h2 id='api'>Google API key</h2>
+	  <div class='psec hoverp'>
 		  <p>In 2013/2014 Google began limiting the number of sequential requests without using a personal key. You must follow these directions to add your key to FBR in order to do more than 50 or so requests.</p>
 		  <p><a href='https://developers.google.com/maps/documentation/javascript/tutorial#api_key'>Activate your API key.</a></p>
 		  <ol>
@@ -81,7 +105,6 @@ etc... 56 lines</pre>
 			  <li>Do not define an IP address. This will prevent it from working.
 			  <li>Copy the API KEY provided to the <strong>config.php</strong> file.
 			  <li>This is a good time to customize the default search region of your requests in <strong>config.php</strong>. You can find a list of the acceptable region codes <a href='http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry'>here</a>.
-			  <li>If you are using Super friendly you should update the region in the main index.html file - see the line <pre>&lt;script src="http://maps.google.com/maps/api/js?sensor=false&amp;region=LU"&gt;&lt;/script&gt;</pre>.
 			  <li>You <em>must</em> enable billing - register a credit card - for this service to work!
 		  </ol>
 
@@ -93,13 +116,16 @@ etc... 56 lines</pre>
 	  </div>
 
 	  <!-- DOCUMENTATION -->
-	  <h2 id='hp4' onclick="seePage(4)">Documentation</h2>
-	  <div class='psec hoverp' id='p4'>
+	  <h2 id='doc'>Documentation</h2>
+	  <div class='psec hoverp'>
 	   <h3>Known issues</h3>
 	   <p>The Google Maps API now (mid 2014) wants you to register your key to get results. It seems that FBR's requests are denied after 200 - 300 requests.</p>
 	   <h3>Installation</h3>
 	   <p>The FBR application has two modes, <strong>Super friendly</strong>, that can be run in any browser, and <strong>Strong and friendly</strong>, which must be installed on a server as it requires a PHP backend to capture the route data.</p>
 	   <p>Download the FBR files and extract them onto your computer/server. Using a browser test to see if running FBR using the default values creates new records in the output folder. <strong>Check the HELP section below if you are having problems installing or getting the default values to run.</strong></p>
+		<h3>Region</h3>
+		  <p>If you are using Super friendly you should update the region in the main index.html file - see the line <pre>&lt;script src="http://maps.google.com/maps/api/js?sensor=false&amp;region=LU"&gt;&lt;/script&gt;</pre></p>
+		<p>There's a list of region codes <a href='http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry' target='_blank'>here</a>.
 	    <h3>Inserting your data</h3>
 	    <p>The data you wish to input should be formatted in the following manner:</p>
 		<pre>id;origin;destination</pre>
@@ -108,6 +134,7 @@ etc... 56 lines</pre>
 2;43.5,7;Berlin, Germany
 3;Paris, France;52.5,13.5
 4;49,7;52.5,13.5</pre>
+		<p><em>Mixing input formats as done above is discouraged!</em></p>
 	   <h3>Options</h3>
 	   <p><strong>Explicitly indicate input type (lat/long versus address string)</strong><br>
 	   Unlike the examples above it is suggested that all the input origin-destinations be in the same format (<strong>id;lat,long;lat,long</strong> or <strong>id;string;string</strong> etc...). Further, it is strongly recommended that you explicitly indicate in what format (lat/long or string) you are submitting the records. It has been noted that a lat/long submitted as a string can return slightly different results than when submitted as a lat/long numercial value. While FBR tries to determine your input format automatically if it believes you have made an error, its guess is not always correct.</p>
@@ -120,12 +147,13 @@ etc... 56 lines</pre>
 	   <p><strong>Output formatting</strong><br>
 	   Before running FBR you may choose a character to separate your output records. Select a comma if you wish to create CSV data.</p>
 	   <p><strong>Pause time</strong><br>
-	   This is the interval between direction requests to the Google Maps API. If you are requesting more than 2,500 requests you should wait 34 seconds per request so that you do not go over the maximum daily limit. Entering a pause value of 34000 milliseconds would allow you to submit 5,000 records over two days. Additionally having too short a pause duration can increase your chance of rejection from the Google Maps API server. There is a built-in delay of 600 milliseconds minumum. Combined with the default 400 millisecond option this creates a 1 second delay between request.</p>
+	   This is the interval between direction requests to the Google Maps API. If you are requesting more than 2,500 requests you should wait 34 seconds per request so that you do not go over the maximum daily limit. Entering a pause value of 34000 milliseconds would allow you to submit 5,000 records over two days. Additionally having too short a pause duration can increase your chance of rejection from the Google Maps API server. There is a built-in delay of 500 milliseconds minumum. Combined with the default 400 millisecond option this creates a 1 second delay between request.</p>
 	   <p><strong>Stop/Pause processing</strong><br>
 	   Once processing has commenced you may stop processing. Those records already processed in the input window will be removed leaving the remaining records. Pressing start again will create a new file.</p>
 	   
 	   <h3>Retrieving your data</h3> 
-	   <p>Your data, upon processing completion, will be in the output folder located at the same location as your fbr.html file. The date-time_maindata.txt file will contain 1 record per record submitted. Each record will have:</p>
+	   <p>Super friendly mode provides the data in a text area below. You must copy this manually into your preferred text editor.</p>
+	   <p>In Friendly and strong mode your data, upon processing completion, will be in the output folder located at the same location as your fbr.html file. The date-time_maindata.txt file will contain 1 record per record submitted. Each record will have:</p>
 	   <ul>
 		<li>the lat/long of the origin,</li>
         <li>the lat/long of the destination,</li>
@@ -142,6 +170,12 @@ etc... 56 lines</pre>
 	   <p>FBR has been tested in <a href='http://www.mozilla.com/'>Mozilla Firefox</a> and <a href='http://www.google.com/chrome'>Google Chrome</a> successfully. I expect Safari to function properly as well. <strong>Internet Explorer 8 has some unresolved issues and is not recommended.</strong></p>
        <h3>Versioning</h3>
 	   <pre>
+V github 
+----
+- uploaded to github
+- version number no longer tracked
+- updated documentation
+- completely changed how Friendly and strong mode operates on the server alone
 
 V2.00 (05/05/2014)
 ----
@@ -194,59 +228,37 @@ V1.01 (07/09/2010)
 
 Know issues:
 - Internet Explorer inconsistently returns results or freezes.
-- This documentation needs to be completely updated to version 2.00
-- Need to add help for adding your key and setting up authorization for your app on Google.
 
 </pre>
 	  
 	   <h3>Licence</h3>
-	   <p>Copyright (c) 2014 Cyrille M&eacute;dard de Chardon, Geoffrey Caruso</p>
+	    <p>
+		Copyright (C) 2014 Cyrille Medard de Chardon, Geoffrey Caruso
+		</p>
+		<p>
+		This program is free software; you can redistribute it and/or modify
+		it under the terms of the GNU General Public License as published by
+		the Free Software Foundation; either version 2 of the License, or
+		any later version.
+		</p>
+		<p>
+		This program is distributed in the hope that it will be useful,
+		but WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+		GNU General Public License for more details.
+		</p>
+		<p>
+		You should have received a copy of the GNU General Public License along
+		with this program; if not, write to the Free Software Foundation, Inc.,
+		51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+		</p>
+		<p> See <a href="../../LICENSE">LICENSE</a></p>
+</div>
 
-<p>Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:</p>
-
-<p>The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.</p>
-
-<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.</p>
-	  </div>
-	  <!-- HELP -->
-	  <h2 id='hp6' onclick="seePage(6)">Help</h2>
-	  <div class='psec' id='p6'>
-	   <h3>Installation/Getting it working</h3>
-	   <p>Please be aware that you need a server that runs PHP to be able to use FBR. Most computers can act as a server. Please make sure you have PHP functioning before testing FBR.</p>
-	   <p>Here are a couple of questions that may help diagnose your problem:
-		<ol>
-		<li>Is PHP running on your server? Are you running FBR on a server? Have you tested a simple PHP script?</li>
-		<li>If the above works then try checking permissions of the 'output' folder, it should be writeable for all (777).</li>
-		<li>Check if FBR is throwing JavaScript errors. Most browsers (Firefox/IE9+/Chrome) have an Error console of some sort. If you are confident you have found an error in FBR please let us know.</li>
-		<li>If you downloaded FBR a long time ago then try downloading it again. Google made some changes that required me to update FBR.</li>
-		</ol>
-       </p>
-	   <h3>Testing PHP</h3>
-	   <p>You can <a href='files/FBR Help.zip'>download a PHP test file</a> to check if your server is processing PHP correctly.</p>
-	   <p>There are three files included (FBR_help.txt, result_of_test.png, test.php) which should help you diagnose the state of PHP on your machine. Do the following:
-	   <ol>
-		<li>Place 'test.php' on your server and open it with your browser using the correct path (e.g., http://127.0.0.1/..., localhost/..., mylab.com/... but not C:/My Documents/...).</li>
-		<li>The php page generated should look something like the file <strong>result_of_test.png</strong></li>
-		<li>If something like <em>phpinfo( );</em> appears you will need to install/configure PHP on your server.</li>
-	   </ol>
-	   </p>
-	  </div>
-	  <!-- CONTACT -->
-	  <h2 id='hp5' onclick="seePage(5)">Contact</h2>
-	  <div class='psec' id='p5'>
-	   <p>Questions or Comments?</p>
+<!-- CONTACT -->
+<h2 id='cont'>Contact</h2>
+<div class='psec'>
+<p>Questions or Comments?</p>
 	   <p>Get in touch with us:</p>
 
    	   <p><strong>Cyrille M&eacute;dard de Chardon</strong><br>
@@ -262,28 +274,5 @@ THE SOFTWARE.</p>
 	</div>
 	<div id="footer">	</div>
   </div>
-  <script type="text/javascript">
-
-   //want to see a specific page
-	var seePage = function(pnum) {
-		var j;
-	
-		//hide all pages
-		$('.psec').hide();
-		//give cursor: pointer css property to all page headers
-		$('h2').addClass('clickable');
-		
-		//show target page
-		$('#p' + pnum).show('fast');
-		//remove cursor: pointer css property
-		$('#hp' + pnum).removeClass('clickable');
-		
-	}
-	
-	// show introduction by default
-	seePage(1);
-  </script>
  </body>
- 
- 
 </html>

@@ -29,6 +29,16 @@ div#radio_buttons_group input:hover { background-color: rgba(180, 235, 180, 0.8)
 div#radio_buttons_group input[type='radio']:checked + label { background-color: rgba(140, 230, 140, 0.8);}
 div#radio_buttons_group label:hover { background-color: rgba(180, 235, 180, 0.8);}
 
+#doculink {
+	float: right;
+	background-color: #f36c6c;
+	border-radius: 5px;
+	color: black;
+	padding: 10px;
+	font-size: 0.5em;
+	text-decoration: none;
+}
+
 /* classes */
 .warn { background-color: #fee; display: none;}
 

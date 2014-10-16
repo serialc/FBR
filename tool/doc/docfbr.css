@@ -1,9 +1,6 @@
 /*--
 * Friendly Bath Routing with Google Maps
 *
-* Copyright 2012 Cyrille Médard de Chardon, Geoffrey Caruso
-* Licensed under the MIT license - see Licence.txt.
-*
 --*/
 
 /*-- Main HTML/Body formatting --*/
@@ -23,16 +20,22 @@ div#header {
 	height: 100px;}
 
 div#spacerblock {
+	margin-left: 20px;
 	background-color: white;}
 
 div#spacerblock div {
 	background-color: inherit;
 	float: left;
 	color: black;
-	padding: 3px 5px 3px 5px;
-	width: 105px;
-	font-weight: bold;
-	text-align: center;}
+	padding: 8px 5px 8px 5px;
+	margin-right: 20px;
+	text-align: left;
+	font-weight: bold;}
+
+div#spacerblock div a {
+	color: black;
+	font-size: 1.1em;
+	text-decoration: none; }
 	
 div#spacerblock div:hover {
 	text-decoration: underline;
