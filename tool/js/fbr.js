@@ -114,6 +114,20 @@ CmGm.setFBRMode = function (mode) {
 			$("#topwarn").show('fast');
 		}
 
+        // check that php is working
+        $.ajax({
+            url: 'test.php'
+        }).done(function( message ) {
+            console.log(message);
+            if( message !== 'success' ) {
+                $('#topwarn').html("<div class='tb'><h3>Error</h3><p>PHP is not enabled on this server.</p><p>See the <a href='doc/' class='doculink'>documentation</a> to help resolve the problem or use the <span class='button_like fbr_selectable' onclick=\"CmGm.setFBRMode('friendly')\">Super friendly</span> version.</p></div>");
+                $("#topwarn").show('fast');
+            }
+        }).fail(function( message ) {
+            $('#topwarn').html("<div class='tb'><h3>Error</h3><p>PHP is not enabled on this server.</p><p>See the <a href='doc/' class='doculink'>documentation</a> to help resolve the problem or use the <span class='button_like fbr_selectable' onclick=\"CmGm.setFBRMode('friendly')\">Super friendly</span> version.</p></div>");
+            $("#topwarn").show('fast');
+        })
+
 		// force check box selection in case the was done other than actually clicking on 'button'
 		$('#fbrm_fas').prop('checked', true);
 	}

@@ -21,7 +21,7 @@ h3 span { float: right; }
 textarea { height: 238px; width: 100%; }
 div#fbr_mode_sel input {display: none; }
 div#fbr_mode_sel input[type='radio']:checked + label { background: rgba(140, 230, 140, 0.9) url('../imgs/selected.png') no-repeat top right; }
-span.button_like{ margin-left: 20px; background-color: rgba(180, 235, 180, 0.8); padding: 5px; border-radius: 5px; cursor: pointer;}
+span.button_like{ background-color: rgba(180, 235, 180, 0.8); padding: 5px; border-radius: 5px; cursor: pointer;}
 span.button_like:hover { background-color: rgba(140, 230, 140, 0.8);}
 div#radio_buttons_group input { display: none; }
 div#radio_buttons_group label { padding: 5px; background-color: rgba(200, 200, 200, 0.4); border-radius: 5px; cursor: pointer;}
@@ -29,13 +29,11 @@ div#radio_buttons_group input:hover { background-color: rgba(180, 235, 180, 0.8)
 div#radio_buttons_group input[type='radio']:checked + label { background-color: rgba(140, 230, 140, 0.8);}
 div#radio_buttons_group label:hover { background-color: rgba(180, 235, 180, 0.8);}
 
-#doculink {
-	float: right;
+.doculink {
 	background-color: #f36c6c;
 	border-radius: 5px;
 	color: black;
 	padding: 10px;
-	font-size: 0.5em;
 	text-decoration: none;
 }
 
