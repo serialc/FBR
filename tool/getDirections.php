@@ -32,20 +32,17 @@ if ( $req->avoidHighways ) {
 
 # set origin type
 if ( $req->otypell ) {
-	$url .= 'origin=' . $req->origin->k . ',' . $req->origin->B . '&';
+	$url .= 'origin=' . $req->origin->lat . ',' . $req->origin->lng . '&';
 } else {
 	$url .= 'origin=' . $req->origin . '&';
 }
 
 # set destination type
 if ( $req->dtypell ) {
-	$url .= 'destination=' . $req->destination->k . ',' . $req->destination->B;
+	$url .= 'destination=' . $req->destination->lat . ',' . $req->destination->lng;
 } else {
 	$url .= 'destination=' . $req->destination;
 }
-
-# Check output
-# print('{"sent":"'.$url.'"}');
 
 # Request directions from API
 # create curl request handler

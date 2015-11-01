@@ -118,7 +118,6 @@ CmGm.setFBRMode = function (mode) {
         $.ajax({
             url: 'test.php'
         }).done(function( message ) {
-            console.log(message);
             if( message !== 'success' ) {
                 $('#topwarn').html("<div class='tb'><h3>Error</h3><p>PHP is not enabled on this server.</p><p>See the <a href='doc/' class='doculink'>documentation</a> to help resolve the problem or use the <span class='button_like fbr_selectable' onclick=\"CmGm.setFBRMode('friendly')\">Super friendly</span> version.</p></div>");
                 $("#topwarn").show('fast');
@@ -357,6 +356,7 @@ CmGm.calcRoute = function () {
 						//hide the warning message whether it is visible or not
 						$("#warn").hide('fast');
 					}
+
 					
 					//determine the type of the destination, assume it is a number if not then it must be an address
 					if(fbr_opts.desttypelatlong && isNaN(journey[2].split(',')[0])) {
@@ -378,7 +378,7 @@ CmGm.calcRoute = function () {
 							$("#warn").hide('fast');
 						}
 					}
-					
+
 					// Give origin the appropriate value type
 					if(fbr_opts.origtypelatlong) {	//lat/long
 						orig = journey[1].split(',');
@@ -394,7 +394,7 @@ CmGm.calcRoute = function () {
 					} else {	// string
 						dest = journey[2];
 					}
-					
+                    
 					// Prepare request object
 					request = {
 						origin: orig,
@@ -409,8 +409,7 @@ CmGm.calcRoute = function () {
 					$("#prog_text").html("Process " + process_progress.toFixed(1) + "% complete (" + (ttl_journies - num_journies) + "/" + ttl_journies + ")")
 					
 					// Call the function that sends the request to Google
-					console.log('query_num' + i);
-					sendRequest(request, journey[0], i);
+					sendRequest(request, journey[0], ttl_journies - num_journies);
 					
 					// Call this function (in which we are in now) again in a set amount of time
 					setTimeout(getDirection, fbr_opts.wait_time);
@@ -470,7 +469,7 @@ CmGm.calcRoute = function () {
 	}; //end of method function call
 
 	// define the sendRequest function here so we can access the 'request_state' variable from the callback function of the GMaps API request.
-	//Needs to be placed in a seperate function so that each sendRequest function object has different olat/olong data
+	// Needs to be placed in a seperate function so that each sendRequest function object has different olat/olong data
 	sendRequest = function (request, LLid, query_num) {
 		print_results = '';
 		
@@ -653,6 +652,14 @@ CmGm.calcRoute = function () {
 
 			request.otypell = fbr_opts.origtypelatlong;
 			request.dtypell = fbr_opts.desttypelatlong;
+
+            // convert requests if they are lat lng
+            if( request.otypell ) {
+                request.origin= {lat:request.origin.lat(), lng:request.origin.lng()};
+            }
+            if( request.dtypell ) {
+                request.destination = {lat:request.destination.lat(), lng:request.destination.lng()};
+            }
 
 			$.ajax({
 				type: 'POST',
