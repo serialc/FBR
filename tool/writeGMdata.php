@@ -23,7 +23,7 @@ $clean_data = preg_replace('/[^a-zA-Z0-9\_\t\-\. \n,]/', '', $data);
 
 if ($clean_data != $data) {
 	//do not create or append to any file, any data
-	echo("The input data cannot be written to the server. It is not valid. If you believe this to be a bug please contact the developer.");
+	echo("The input data cannot be written to the server. It is not valid (Contains characters we do not allow for safety reasons!). If you believe this to be a bug please contact the developer.");
 	return;
 }
 
@@ -84,7 +84,7 @@ switch ($data_type) {
 
 if($fp) {
 	//write data to file
-	fwrite($fp, $data . "\n");
+	fwrite($fp, $clean_data . "\n");
 
 	//close file
 	fclose($fp);

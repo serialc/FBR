@@ -568,7 +568,11 @@ CmGm.calcRoute = function () {
 						// Print the lat/long of each step in the following format
 						for( i = 0; i < result.routes[0].overview_path.length; i++ ) {
 							var latlng = result.routes[0].overview_path[i];
-							print_results += LLid + fbr_opts.spacer + (i+1) + fbr_opts.spacer + latlng.lat() + fbr_opts.spacer + latlng.lng() + '\n';
+                            print_results += LLid + fbr_opts.spacer + (i+1) + fbr_opts.spacer + latlng.lat() + fbr_opts.spacer + latlng.lng();
+                            // add newline for each line except the last
+                            if( i !== (result.routes[0].overview_path.length - 1) ) {
+                                print_results += '\n';
+                            }
 						}
 						
 						// Send the line path data to server using jquery AJAX
