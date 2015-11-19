@@ -524,7 +524,7 @@ CmGm.calcRoute = function () {
 					$('#sf_res_textarea').val($('#sf_res_textarea').val() + print_results + '\n');
 				}
 				if( fbr_opts.mode == 'strong' ) {
-					//try to send results to file using jquery AJAX
+					//try to send main results to file using jquery AJAX
 					$.ajax({
 						type: 'POST',
 						url: 'writeGMdata.php',
@@ -533,7 +533,7 @@ CmGm.calcRoute = function () {
 					.done(function( message ) {
 						if( message.length != 0 ) {
 							$('#warn_error_msg').val(LLid + fbr_opts.spacer + 'Failed search query number: ' +
-								query_num + ' - An error occurred while trying to submit data to server! Message: ' +
+								query_num + ' - An error occurred while trying to write main dist/time results data to server! Message: ' +
 								message + '\'\n');
 							$('#error_section').show('fast');
 							$("#warn").html('Error encountered see details in Errors section below.');
@@ -546,7 +546,7 @@ CmGm.calcRoute = function () {
 					})
 					.fail( function(request, status, error) {
 						$('#warn_error_msg').val(LLid + fbr_opts.spacer + 'Failed search query number: ' +
-							query_num + ' - An error occurred while trying to submit data to server! Message: ' +
+                            query_num + ' - An error occurred while trying to write main dist/time results data to server! Message: ' +
 							error + '\n');
 						$('#error_section').show('fast');
 						$("#warn").html('Error encountered see details in Errors section below.');
@@ -580,7 +580,7 @@ CmGm.calcRoute = function () {
 						.done(function( message ) {
 							if( message.length != 0 ) {
 								$('#warn_error_msg').val(LLid + fbr_opts.spacer + 'Failed search query number: ' +
-									query_num + ' - An error occurred while trying to submit data to server! Message: ' +
+									query_num + ' - An error occurred while trying to write line path data results to server! Message: ' +
 									message + '\'\n');
 								$('#error_section').show('fast');
 								$("#warn").html('Error encountered see details in Errors section below.');
