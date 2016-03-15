@@ -1,8 +1,6 @@
-FBR
+Friendly Batch Routing (FBR) with Google Maps
 ===
-
-Batch routing with Google Maps
-
+Allows simple batch requests of a few origin/destinations or a more advanced version where you perform queries in the background but must enable Google Directions billing for unlimited requests (but paid over a certain number per day).
 
 LICENSE
 ===

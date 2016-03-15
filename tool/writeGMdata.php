@@ -28,7 +28,7 @@ if ($clean_data != $data) {
 }
 
 // ----- Filename retrieval start -------------
-# check if kefile and output folder are writable
+# check if keyfile and output folder are writable
 if( !is_writable('key_file.txt') ) {
 	print("FBR requires writing permission on 'key_file.txt' for Friendly and strong mode.");
 	return;
