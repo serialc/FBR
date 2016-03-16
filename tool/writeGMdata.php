@@ -72,17 +72,25 @@ if( $filename == '' ) {
 // ----- Filename retrieval end -------------
 
 //open appropriate file for writing only
+$header = False;
+$target = False;
 switch ($data_type) {
 	case "main":
-		$fp = fopen('output/' . $filename . '_maindata.txt', 'a');
-		break;
-		
-	case 'path':
-		$fp = fopen('output/' . $filename . '_pathdata.txt', 'a');
-		break;
+        $target = 'output/' . $filename . '_maindata.txt';
+        if( !file_exists($target) ) $header = "id    olat    olng    dlat    dlng    time_s  dist_m  inst_steps";
+        break;
+
+    case "path":
+        $target = 'output/' . $filename . '_pathdata.txt';
+        if( !file_exists($target) ) $header = "id	segment	lat	lng";
+        break;
 }
+$fp = fopen($target, 'a');
 
 if($fp) {
+    // write header if necessary
+	if($header) fwrite($fp, $header . "\n");
+    
 	//write data to file
 	fwrite($fp, $clean_data . "\n");
 
