@@ -678,7 +678,7 @@ CmGm.calcRoute = function () {
 			.fail( function( data ) {
 				console.log(data);
 				$('#warn_error_msg').val(LLid + fbr_opts.spacer + 'Failed search query number: ' +
-					query_num + ' - An error occurred while trying to submit request to Google Directions API using getDirections.php Message: ' + data + '\n');
+					query_num + ' - An error occurred while trying to submit request to Google Directions API using getDirections.php Message: ' + JSON.stringify(data) + '\n');
 				$('#error_section').show('fast');
 				$("#warn").html('Error encountered see details in Errors section below.');
 				$("#warn").show('fast');
