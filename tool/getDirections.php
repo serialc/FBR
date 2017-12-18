@@ -23,7 +23,8 @@ if(isset($_POST['json'])) {
 $url = 'https://maps.googleapis.com/maps/api/directions/json?' .
 	'key=' . DAPIKEY . '&' .
 	'region=' . REGION . '&' .
-	'mode=' . $req->travelMode . '&';
+	'mode=' . strtolower($req->travelMode) . '&';
+	# mode string must be lower case!
 
 # avoid HW? Can add additonal options such as tolls and ferries but requires work upstream as well
 if ( $req->avoidHighways ) {
