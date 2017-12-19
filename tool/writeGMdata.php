@@ -77,7 +77,7 @@ $target = False;
 switch ($data_type) {
 	case "main":
         $target = 'output/' . $filename . '_maindata.txt';
-        if( !file_exists($target) ) $header = "id    olat    olng    dlat    dlng    time_s  dist_m  inst_steps";
+        if( !file_exists($target) ) $header = "id	olat	olng	dlat	dlng	time_s	dist_m	inst_steps	mode	fbr_mode";
         break;
 
     case "path":

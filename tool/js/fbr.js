@@ -291,7 +291,9 @@ CmGm.calcRoute = function () {
 					'dlng' + fbr_opts.spacer +
 					'time_s' + fbr_opts.spacer +
 					'dist_m' + fbr_opts.spacer +
-					'inst_steps' + '\n');	//the number of instruction steps / complexity?.
+					'inst_steps' + fbr_opts.spacer +
+                    'mode' + fbr_opts.spacer +
+                    'fbr_mode' + '\n');	//the number of instruction steps / complexity?.
 	
 	// clear previous results
 	$("#jdist").val(''); // holds the input data of the problem record (these can be copy/pasted into the input window)
@@ -505,7 +507,9 @@ CmGm.calcRoute = function () {
 						theleg.end_location.lng() + fbr_opts.spacer +
 						theleg.duration.value + fbr_opts.spacer +
 						theleg.distance.value + fbr_opts.spacer +
-						theleg.steps.length;	//the number of instruction steps / complexity?.
+						theleg.steps.length + fbr_opts.spacer +	//the number of instruction steps / complexity?.
+                        fbr_opts.ttype + fbr_opts.spacer +
+                        fbr_opts.mode;
 				} else {
 					print_results =
 						LLid + fbr_opts.spacer +
@@ -515,7 +519,9 @@ CmGm.calcRoute = function () {
 						theleg.end_location.lng + fbr_opts.spacer +
 						theleg.duration.value + fbr_opts.spacer +
 						theleg.distance.value + fbr_opts.spacer +
-						theleg.steps.length;	//the number of instruction steps / complexity?.
+						theleg.steps.length + fbr_opts.spacer +	//the number of instruction steps / complexity?.
+                        fbr_opts.ttype + fbr_opts.spacer +
+                        fbr_opts.mode;
 				}
 
 				// See if we are in Super friendly or Friendly and strong mode
